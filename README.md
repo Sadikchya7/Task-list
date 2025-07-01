@@ -6,3 +6,17 @@
 // Additional
 
 - I should be able to revisit the site to see list and status of my task
+
+pass by value and pass by reference
+
+[
+{
+"title": 'task 1',
+"checked": false,
+// status: "active | completed | on hold"
+},
+{
+"title": 'task 1',
+"checked": false
+}
+]
