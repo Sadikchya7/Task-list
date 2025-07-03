@@ -1,0 +1,43 @@
+.input-box {
+  height: 45px;
+  width: 400px;
+  margin: 0 auto;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #ffffff;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  input {
+    background-color: transparent;
+    color: black;
+    width: 280px;
+    border: none;
+    margin: 0 20px;
+    font-size: 15px;
+    font-style: italic;
+  }
+  input:focus {
+    outline: none;
+  }
+  button {
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 20px;
+    font-family: inherit;
+    background-color: #986bdc;
+    cursor: pointer;
+    width: 102px;
+    transition: border-color 0.25s;
+    text-align: center;
+  }
+  button:hover {
+    background-color: #855ec1;
+  }
+  button:active {
+    background-color: #b07dfd;
+  }
+}

@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { TestComponent } from "./TestComponent";
+import { InputBox } from "./Input-box/InputBox";
+import "./Input-box/inputbox.css";
+import { Pages } from "./Pages/page";
+import "./Pages/page.css";
+import { Card } from "./Card/card";
+import "./Card/card.css";
+
+// import "./Input-box/inputbox.css";
 
 function App() {
   const [todo, setTodo] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [filterTask, setFilterTask] = useState(null);
+  const [filterTask, setFilterTask] = useState([]);
 
   const ToDoList = (event) => {
     setInputValue(event.currentTarget.value);
@@ -19,7 +26,7 @@ function App() {
     };
     setTodo([...todo, newTask]);
     setInputValue("");
-    // console.log(newTask);
+    // setFilterTask();
   };
 
   const deleteTask = (index) => {
@@ -39,9 +46,10 @@ function App() {
     setTodo(updatedToDo);
   };
   const taskCompleted = () => {
+    console.log("called", todo);
     const completedTasks = todo.filter((task) => task.status === "completed");
+    console.log("Completed");
     if (completedTasks.length === 0) {
-      console.log("no task");
       setFilterTask([]);
     } else {
       setFilterTask(completedTasks);
@@ -49,6 +57,7 @@ function App() {
   };
 
   const taskIncompleted = () => {
+    console.log("Incomplete");
     const incompleteTasks = todo.filter((task) => task.status === "incomplete");
     if (incompleteTasks.length === 0) {
       console.log("no task");
@@ -66,94 +75,42 @@ function App() {
   useEffect(() => {
     const savedTodos = localStorage.getItem("Todo");
     if (savedTodos) {
+      console.log(savedTodos);
+
       setTodo(JSON.parse(savedTodos));
     }
   }, []);
+  useEffect(() => {
+    const clickEventHandler = (event) => {
+      if (event.key === "Enter") {
+        addTask();
+      }
+    };
+
+    document.addEventListener("keydown", clickEventHandler);
+
+    return () => {
+      document.removeEventListener("keydown", clickEventHandler);
+    };
+  }, [inputValue, todo]);
   return (
     <>
       <h1>To-Do List</h1>
-      <div className="InputBox">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={ToDoList}
-          placeholder="Add new task"
-        />
-        <button onClick={addTask}>Add</button>
-      </div>
-      <div className="Complete-incomplete">
-        <button onClick={() => taskCompleted()}>Completed</button>
-        <button onClick={() => taskIncompleted()}>Incomplete</button>
-        <button onClick={() => setFilterTask(null)}>Show All</button>
-      </div>
-      {/* <TestComponent text={inputValue} text2={"test2"} />
-      <TestComponent text={inputValue} text2={"test2"} />
-      <TestComponent text={inputValue} text2={"test2"} />
-      <TestComponent
-        text={inputValue}
-        text2={"test2"}
-        action={() => console.log("from outside")}
-      /> */}
 
-      <div className="card">
-        {filterTask === null ? (
-          todo.length === 0 ? (
-            <p style={{ textAlign: "center", color: "gray" }}>
-              No tasks available
-            </p>
-          ) : (
-            todo.map((task, index) => (
-              <div className="TaskListContainer" key={index}>
-                <div className="TaskList">
-                  <input
-                    type="checkbox"
-                    checked={task.checked}
-                    onChange={() => checked(index)}
-                    value={task.checked}
-                  />
-                  <label
-                    style={{
-                      textDecoration: task.checked ? "line-through" : "none",
-                    }}
-                  >
-                    {task.title}
-                  </label>
-                </div>
-                <button onClick={() => deleteTask(index)}>
-                  <img src="img/trash-can.png" alt="delete" />
-                </button>
-              </div>
-            ))
-          )
-        ) : filterTask.length === 0 ? (
-          <p style={{ textAlign: "center", color: "gray" }}>
-            No tasks matching filter
-          </p>
-        ) : (
-          filterTask.map((task, index) => (
-            <div className="TaskListContainer" key={index}>
-              <div className="TaskList">
-                <input
-                  type="checkbox"
-                  checked={task.checked}
-                  onChange={() => checked(index)}
-                  value={task.checked}
-                />
-                <label
-                  style={{
-                    textDecoration: task.checked ? "line-through" : "none",
-                  }}
-                >
-                  {task.title}
-                </label>
-              </div>
-              <button onClick={() => deleteTask(index)}>
-                <img src="img/trash-can.png" alt="delete" />
-              </button>
-            </div>
-          ))
-        )}
-      </div>
+      <InputBox inputValue={inputValue} ToDoList={ToDoList} addTask={addTask} />
+      <Pages
+        taskCompleted={taskCompleted}
+        taskIncompleted={taskIncompleted}
+        setFilterTask={setFilterTask}
+        todo={todo}
+        filterTask={filterTask}
+      />
+      <Card
+        filterTask={filterTask}
+        checked={checked}
+        deleteTask={deleteTask}
+        todo={todo}
+      />
     </>
   );
 }
