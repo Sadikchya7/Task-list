@@ -25,6 +25,7 @@ function App() {
       status: "incomplete",
     };
     setTodo([...todo, newTask]);
+    setFilterTask([...filterTask, newTask]);
     setInputValue("");
     // setFilterTask();
   };
@@ -37,6 +38,7 @@ function App() {
       }
     }
     setTodo(NewToDO);
+    setFilterTask(todo);
   };
   const checked = (index) => {
     const updatedToDo = [...todo];
@@ -110,6 +112,9 @@ function App() {
         checked={checked}
         deleteTask={deleteTask}
         todo={todo}
+        setFilterTask={setFilterTask}
+        taskCompleted={taskCompleted.completedTasks}
+        taskIncompleted={taskIncompleted.incompleteTasks}
       />
     </>
   );
