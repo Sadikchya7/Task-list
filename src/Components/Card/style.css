@@ -1,0 +1,63 @@
+.Card {
+  margin: 20px 0;
+  width: 370px;
+  background-color: white;
+  padding: 5px 15px;
+  text-align: start;
+  font-size: large;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  .TaskListContainer {
+    width: 370px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    background-color: #b78df8;
+    border-radius: 20px;
+    /* opacity: 80%; */
+    margin: 20px 0;
+  }
+  .delete-all-button {
+    color: white;
+    font-size: small;
+    width: 73px;
+    text-align: center;
+    background-color: #b78df8;
+    border-radius: 15px;
+  }
+  .delete-all-button:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .delete-all-button:active {
+    background-color: #bbb9b9;
+  }
+  .TaskList {
+    width: 330px;
+    display: flex;
+
+    input {
+      margin: 5px 20px;
+      border: 3px solid white;
+      width: 18px;
+      min-height: 18px;
+      accent-color: white;
+      cursor: pointer;
+      position: relative;
+    }
+  }
+  .delete-icon {
+    background-color: white;
+    border-radius: 5px;
+    height: 26px;
+    aspect-ratio: 1/1;
+    padding: 0;
+    display: flex;
+    border: 1px solid transparent;
+  }
+  .delete-icon:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .delete-icon:active {
+    background-color: #bbb9b9;
+  }
+}

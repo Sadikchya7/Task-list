@@ -1,33 +1,16 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { InputBox } from "./Input-box/InputBox";
-import "./Input-box/inputbox.css";
-import { Pages } from "./Pages/page";
-import "./Pages/page.css";
-import { Card } from "./Card/card";
-import "./Card/card.css";
-
-// import "./Input-box/inputbox.css";
+import { Input } from "./Components/Input";
+import { Card } from "./Components/Card";
+import { Tab } from "./Components/Tab";
 
 function App() {
   const [todo, setTodo] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [filterTask, setFilterTask] = useState([]);
+  const [filterTask, setFilterTask] = useState(null);
 
-  const ToDoList = (event) => {
-    setInputValue(event.currentTarget.value);
-  };
-
-  const addTask = () => {
-    const newTask = {
-      title: inputValue,
-      checked: false,
-      status: "incomplete",
-    };
+  const addTask = (newTask) => {
     setTodo([...todo, newTask]);
-    setFilterTask([...filterTask, newTask]);
-    setInputValue("");
-    // setFilterTask();
+    setFilterTask(null);
   };
 
   const deleteTask = (index) => {
@@ -38,15 +21,18 @@ function App() {
       }
     }
     setTodo(NewToDO);
-    setFilterTask(todo);
+    setFilterTask(null);
   };
-  const checked = (index) => {
-    const updatedToDo = [...todo];
-    const task = updatedToDo[index];
-    task.checked = !task.checked;
-    task.status = task.checked ? "completed" : "incomplete";
+
+  const deleteAll = () => {
+    setTodo([]);
+    setFilterTask(null);
+  };
+
+  const checked = (updatedToDo) => {
     setTodo(updatedToDo);
   };
+
   const taskCompleted = () => {
     console.log("called", todo);
     const completedTasks = todo.filter((task) => task.status === "completed");
@@ -68,6 +54,8 @@ function App() {
       setFilterTask(incompleteTasks);
     }
   };
+
+  //local storage
   useEffect(() => {
     if (todo.length === 0) {
       return;
@@ -82,39 +70,46 @@ function App() {
       setTodo(JSON.parse(savedTodos));
     }
   }, []);
-  useEffect(() => {
-    const clickEventHandler = (event) => {
-      if (event.key === "Enter") {
-        addTask();
-      }
-    };
 
-    document.addEventListener("keydown", clickEventHandler);
-
-    return () => {
-      document.removeEventListener("keydown", clickEventHandler);
-    };
-  }, [inputValue, todo]);
   return (
     <>
       <h1>To-Do List</h1>
 
-      <InputBox inputValue={inputValue} ToDoList={ToDoList} addTask={addTask} />
-      <Pages
-        taskCompleted={taskCompleted}
-        taskIncompleted={taskIncompleted}
-        setFilterTask={setFilterTask}
-        todo={todo}
-        filterTask={filterTask}
+      <Input
+        addTask={addTask}
+        // label={"New Task:"}
+        placeholder={"This is placeholder"}
       />
+
+      <Tab
+        config={[
+          {
+            label: "COMPLETED",
+            onClick: () => {
+              taskCompleted();
+            },
+          },
+          {
+            label: "INCOMPLETED",
+            onClick: () => {
+              taskIncompleted();
+            },
+          },
+          {
+            label: "ALL",
+            onClick: () => {
+              setFilterTask(null);
+            },
+          },
+        ]}
+      />
+
       <Card
         filterTask={filterTask}
         checked={checked}
         deleteTask={deleteTask}
         todo={todo}
-        setFilterTask={setFilterTask}
-        taskCompleted={taskCompleted.completedTasks}
-        taskIncompleted={taskIncompleted.incompleteTasks}
+        deleteAll={deleteAll}
       />
     </>
   );
