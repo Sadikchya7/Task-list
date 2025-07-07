@@ -4,9 +4,11 @@ const Tab = ({ config }) => {
     <div>
       {/* <p>Select filter</p> */}
       <div className="tab">
-        {config.map((buttonConfig) => {
+        {config.map((buttonConfig, index) => {
           return (
-            <button onClick={buttonConfig.onClick}>{buttonConfig.label}</button>
+            <button onClick={buttonConfig.onClick} key={index}>
+              {buttonConfig.label}
+            </button>
           );
         })}
       </div>

@@ -14,13 +14,13 @@ function App() {
   };
 
   const deleteTask = (index) => {
-    const NewToDO = [];
+    const newTodo = [];
     for (let i = 0; i < todo.length; i++) {
       if (i !== index) {
-        NewToDO.push(todo[i]);
+        newTodo.push(todo[i]);
       }
     }
-    setTodo(NewToDO);
+    setTodo(newTodo);
     setFilterTask(null);
   };
 
@@ -29,14 +29,12 @@ function App() {
     setFilterTask(null);
   };
 
-  const checked = (updatedToDo) => {
-    setTodo(updatedToDo);
+  const checked = (updatedTodo) => {
+    setTodo(updatedTodo);
   };
 
   const taskCompleted = () => {
-    console.log("called", todo);
     const completedTasks = todo.filter((task) => task.status === "completed");
-    console.log("Completed");
     if (completedTasks.length === 0) {
       setFilterTask([]);
     } else {
@@ -45,7 +43,6 @@ function App() {
   };
 
   const taskIncompleted = () => {
-    console.log("Incomplete");
     const incompleteTasks = todo.filter((task) => task.status === "incomplete");
     if (incompleteTasks.length === 0) {
       console.log("no task");
@@ -55,17 +52,17 @@ function App() {
     }
   };
 
-  //local storage
   useEffect(() => {
     if (todo.length === 0) {
       return;
     }
     localStorage.setItem("Todo", JSON.stringify(todo));
   }, [todo]);
+
   useEffect(() => {
     const savedTodos = localStorage.getItem("Todo");
     if (savedTodos) {
-      console.log(savedTodos);
+      // console.log(savedTodos);
 
       setTodo(JSON.parse(savedTodos));
     }

@@ -15,13 +15,13 @@ function App() {
   };
 
   const deleteTask = (index) => {
-    const NewToDO = [];
+    const newTodo = [];
     for (let i = 0; i < todo.length; i++) {
       if (i !== index) {
-        NewToDO.push(todo[i]);
+        newTodo.push(todo[i]);
       }
     }
-    setTodo(NewToDO);
+    setTodo(newTodo);
     console.log(index);
     console.log(todo);
   };

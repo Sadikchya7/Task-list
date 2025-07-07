@@ -1,15 +1,15 @@
 import "./style.css";
 const Card = ({ filterTask, checked, deleteTask, todo, deleteAll }) => {
   const onChecked = (index) => {
-    const updatedToDo = [...todo];
-    const task = updatedToDo[index];
+    const updatedTodo = [...todo];
+    const task = updatedTodo[index];
     task.checked = !task.checked;
     task.status = task.checked ? "completed" : "incomplete";
 
-    checked(updatedToDo);
+    checked(updatedTodo);
   };
   return (
-    <div className="Card">
+    <div className="card">
       <button className="delete-all-button" onClick={() => deleteAll()}>
         Delete all
       </button>
@@ -21,9 +21,9 @@ const Card = ({ filterTask, checked, deleteTask, todo, deleteAll }) => {
             </p>
           ) : (
             todo.map((task, index) => (
-              <div>
-                <div className="TaskListContainer" key={index}>
-                  <div className="TaskList">
+              <div key={index}>
+                <div className="task-list-container" key={index}>
+                  <div className="task-list">
                     <input
                       type="checkbox"
                       checked={task.checked}
@@ -55,14 +55,14 @@ const Card = ({ filterTask, checked, deleteTask, todo, deleteAll }) => {
         ) : (
           filterTask.map((task, index) => (
             <div
-              className="TaskListContainer"
+              className="task-list-container"
               key={index}
               style={{
                 backgroundColor: task.checked ? "#50C878" : "#FF0000",
                 color: "white",
               }}
             >
-              <div className="TaskList">
+              <div className="task-list">
                 <label
                   style={{
                     margin: "10px 20px ",
